@@ -15,7 +15,8 @@
     }
     .mix-wall {
       background-image: url('mix background.png');
-      background-size: cover;
+      background-size: contain;
+      background-repeat: no-repeat;
       background-position: center;
       width: 100vw;
       height: 100vh;
@@ -67,8 +68,25 @@
     <iframe id="mixPlayer" src="" allow="autoplay"></iframe>
 
     <!-- Automatisch platzierte Mixes -->
-    <!-- (Mix-Elemente hier beibehalten) -->
-
+    <div class="cover" style="top:60px; left:60px;" data-title="Feel the Exotic Touch" data-mix="https://www.mixcloud.com/muZikfranZ/feel-the-exotic-touch-part-1/" draggable="true"></div>
+    <div class="cover" style="top:60px; left:180px;" data-title="Deep Keta Pop" data-mix="https://www.mixcloud.com/muZikfranZ/deep-keta-pop-ethno-world-indie-mix/" draggable="true"></div>
+    <div class="cover" style="top:60px; left:300px;" data-title="Freestyle Airlines to Africa" data-mix="https://www.mixcloud.com/muZikfranZ/muzikfranz-freestyle-airlines-flight-nr140515-to-africa/" draggable="true"></div>
+    <div class="cover" style="top:60px; left:420px;" data-title="muZikfranZ Freestyle vol.1" data-mix="https://www.mixcloud.com/muZikfranZ/muzikfranz-freestyle-vol1/" draggable="true"></div>
+    <div class="cover" style="top:180px; left:60px;" data-title="Schwimmende Platten" data-mix="https://www.mixcloud.com/muZikfranZ/schwimmende-platten/" draggable="true"></div>
+    <div class="cover" style="top:180px; left:180px;" data-title="Wassermusik" data-mix="https://www.mixcloud.com/muZikfranZ/wassermusik/" draggable="true"></div>
+    <div class="cover" style="top:180px; left:300px;" data-title="Sommersonntag" data-mix="https://www.mixcloud.com/muZikfranZ/sommersonntag/" draggable="true"></div>
+    <div class="cover" style="top:180px; left:420px;" data-title="New Citygroove" data-mix="https://www.mixcloud.com/muZikfranZ/new-citygroove/" draggable="true"></div>
+    <div class="cover" style="top:300px; left:60px;" data-title="Altstadt Grooves" data-mix="https://www.mixcloud.com/muZikfranZ/altstadt-grooves/" draggable="true"></div>
+    <div class="cover" style="top:300px; left:180px;" data-title="Planet Groove" data-mix="https://www.mixcloud.com/muZikfranZ/planet-groove/" draggable="true"></div>
+    <div class="cover" style="top:300px; left:300px;" data-title="Monday Morning Mixtape" data-mix="https://www.mixcloud.com/muZikfranZ/monday-morning-mixtape/" draggable="true"></div>
+    <div class="cover" style="top:300px; left:420px;" data-title="Jungle Fever" data-mix="https://www.mixcloud.com/muZikfranZ/jungle-fever/" draggable="true"></div>
+    <div class="cover" style="top:420px; left:60px;" data-title="Autumn Vibes" data-mix="https://www.mixcloud.com/muZikfranZ/autumn-vibes/" draggable="true"></div>
+    <div class="cover" style="top:420px; left:180px;" data-title="muZikfranZ live @ Funky Kitchen" data-mix="https://www.mixcloud.com/muZikfranZ/muzikfranz-live-funky-kitchen/" draggable="true"></div>
+    <div class="cover" style="top:420px; left:300px;" data-title="Lazy Sunday Flow" data-mix="https://www.mixcloud.com/muZikfranZ/lazy-sunday-flow/" draggable="true"></div>
+    <div class="cover" style="top:420px; left:420px;" data-title="Tropical Radio Show" data-mix="https://www.mixcloud.com/muZikfranZ/tropical-radioshow/" draggable="true"></div>
+    <div class="cover" style="top:540px; left:60px;" data-title="Midsummer Session" data-mix="https://www.mixcloud.com/muZikfranZ/midsummer-session/" draggable="true"></div>
+    <div class="cover" style="top:540px; left:180px;" data-title="muZikfranZ Dub & Lounge" data-mix="https://www.mixcloud.com/muZikfranZ/muzikfranz-dub-lounge/" draggable="true"></div>
+    <div class="cover" style="top:540px; left:300px;" data-title="Freestyle im Park" data-mix="https://www.mixcloud.com/muZikfranZ/freestyle-im-park/" draggable="true"></div>
   </div>
 
   <script>
@@ -76,7 +94,7 @@
       event.preventDefault();
       const mixUrl = event.dataTransfer.getData("text/plain");
       const encodedFeed = encodeURIComponent(mixUrl.replace("https://www.mixcloud.com", ""));
-      document.getElementById("mixPlayer").src = `https://www.mixcloud.com/widget/iframe/?feed=${encodedFeed}&hide_cover=1&light=1`;
+      document.getElementById("mixPlayer").src = `https://www.mixcloud.com/widget/iframe/?feed=${encodedFeed}&hide_cover=1&light=1&autoplay=1`;
     }
 
     document.querySelectorAll('.cover').forEach(cover => {
@@ -87,4 +105,3 @@
   </script>
 </body>
 </html>
-
