@@ -4,15 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>muZikfranZ – Mixgalerie</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Orbitron', sans-serif;
       background-color: #4A7981;
       color: #fff;
-      overflow: hidden;
+      overflow-x: hidden;
       position: relative;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 28px;
+      color: orange;
+      margin: 20px 0;
     }
 
     .cover {
@@ -46,9 +53,9 @@
     #dropImage {
       position: absolute;
       left: 50%;
-      top: 85%;
+      top: 75%;
       transform: translate(-50%, -50%);
-      height: 75px;
+      height: 129px;
       width: auto;
       z-index: 1;
     }
@@ -67,10 +74,9 @@
   </style>
 </head>
 <body>
+  <h1>muZikfranZ – Mixes From Another Universe</h1>
   <img id="dropImage" src="1210.jpg" alt="Technics SL-1210" />
-
   <iframe id="mixPlayer" src="" allow="autoplay"></iframe>
-
   <script>
     const mixes = [
       "feel-the-exotic-touch-part-1",
@@ -103,7 +109,7 @@
       cover.title = mix.title;
       cover.draggable = true;
       cover.style.left = `${60 + (index % 10) * 180}px`;
-      cover.style.top = `${40 + Math.floor(index / 10) * 160}px`;
+      cover.style.top = `${100 + Math.floor(index / 10) * 160}px`;
       const textSpan = document.createElement('span');
       textSpan.textContent = mix.title;
       cover.appendChild(textSpan);
