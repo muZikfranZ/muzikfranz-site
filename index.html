@@ -9,111 +9,112 @@
     body {
       margin: 0;
       font-family: 'Roboto', sans-serif;
-      background-color: #1a1a1a;
+      background-color: #4A7981;
       color: #fff;
-      overflow-x: hidden;
-    }
-    .mix-wall {
-      background-image: url('mix background.png');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      width: 100vw;
-      height: 100vh;
+      overflow: hidden;
       position: relative;
     }
+
     .cover {
-      position: absolute;
       width: 100px;
       height: 100px;
+      background: url('cover.png') no-repeat center/cover;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 5px rgba(0,0,0,0.5);
+      overflow: hidden;
+      text-align: center;
+      font-size: 9px;
+      color: orange;
+      text-shadow: 1px 1px 2px #000;
       cursor: grab;
-      border-radius: 6px;
     }
-    .cover:hover::after {
-      content: attr(data-title);
+
+    .cover:active {
+      cursor: grabbing;
+    }
+
+    #dropImage {
       position: absolute;
-      top: -1.5em;
-      left: 0;
-      background: rgba(0,0,0,0.8);
-      color: #fff;
-      padding: 4px 8px;
-      font-size: 0.9em;
-      white-space: nowrap;
-      border-radius: 4px;
+      left: 50%;
+      top: 75%;
+      transform: translate(-50%, -50%);
+      height: 300px;
+      width: auto;
+      z-index: 1;
     }
-    .cover img {
-      width: 100%;
-      height: 100%;
-      border-radius: 6px;
-    }
-    .player-zone {
-      position: absolute;
-      top: 60px;
-      left: 630px;
-      width: 200px;
-      height: 200px;
-      z-index: 2;
-    }
+
     iframe {
       width: 100%;
       max-width: 500px;
       height: 120px;
       border: none;
-      position: absolute;
-      bottom: 10px;
+      position: fixed;
+      bottom: 0;
       left: 50%;
       transform: translateX(-50%);
+      z-index: 10;
     }
   </style>
 </head>
 <body>
-  <div class="mix-wall">
-    <div class="player-zone" ondragover="event.preventDefault()" ondrop="playMix(event)"></div>
-    <iframe id="mixPlayer" src="" allow="autoplay"></iframe>
+  <img id="dropImage" src="1210.jpg" alt="Technics SL-1210" />
 
-    <!-- 19 Mix-Cover präzise positioniert -->
-    <div class="cover" style="top:50px; left:40px;" data-title="Feel the exotic touch part 1" data-mix="https://www.mixcloud.com/muZikfranZ/feel-the-exotic-touch-part-1/" draggable="true">
-      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-1.jpg" alt="1">
-    </div>
-    <div class="cover" style="top:50px; left:160px;" data-title="Twist Contest" data-mix="https://www.mixcloud.com/muZikfranZ/muzikfranzs-twist-contest/" draggable="true">
-      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-2.jpg" alt="2">
-    </div>
-    <div class="cover" style="top:50px; left:280px;" data-title="Viva la vida Cumbia Session" data-mix="https://www.mixcloud.com/muZikfranZ/viva-la-vida-muzikfranz-cumbia-lockdown-session/" draggable="true">
-      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-3.jpg" alt="3">
-    </div>
-    <div class="cover" style="top:170px; left:40px;" data-title="Tour de Manège" data-mix="https://www.mixcloud.com/muZikfranZ/muzikfranz-fait-un-tour-de-man%C3%A8ge/" draggable="true">
-      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-4.jpg" alt="4">
-    </div>
-    <div class="cover" style="top:170px; left:160px;" data-title="Stay at Home Flight" data-mix="https://www.mixcloud.com/muZikfranZ/quaratine-airways-stay-at-home-and-fly-high-to-thailand-and-cambodia/" draggable="true">
-      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-5.jpg" alt="5">
-    </div>
-    <div class="cover" style="top:170px; left:280px;" data-title="Flight to Latin America" data-mix="https://www.mixcloud.com/muZikfranZ/freestyle-airlines-flight-nr140605-to-latin-america/" draggable="true">
-      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-6.jpg" alt="6">
-    </div>
-    <div class="cover" style="top:290px; left:40px;" data-title="Funky Breaks Train" data-mix="https://www.mixcloud.com/muZikfranZ/the-funky-breaks-train-train-nr140531/" draggable="true">
-      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-7.jpg" alt="7">
-    </div>
-    <div class="cover" style="top:290px; left:160px;" data-title="Freestyle Funk Train" data-mix="https://www.mixcloud.com/muZikfranZ/funky-freestyle-train-train-nr140526/" draggable="true">
-      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-8.jpg" alt="8">
-    </div>
-    <div class="cover" style="top:290px; left:280px;" data-title="Air Acrobatics" data-mix="https://www.mixcloud.com/muZikfranZ/freestyle-airlines-flight-nr140520-air-acrobatics-do-the-loop/" draggable="true">
-      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-9.jpg" alt="9">
-    </div>
-    <!-- Weitere 10 Mixes können analog hinzugefügt werden -->
-  </div>
+  <iframe id="mixPlayer" src="" allow="autoplay"></iframe>
 
   <script>
-    function playMix(event) {
-      event.preventDefault();
-      const mixUrl = event.dataTransfer.getData("text/plain");
-      const encodedFeed = encodeURIComponent(mixUrl.replace("https://www.mixcloud.com", ""));
-      document.getElementById("mixPlayer").src = `https://www.mixcloud.com/widget/iframe/?feed=${encodedFeed}&hide_cover=1&light=1&autoplay=1`;
-    }
+    const mixes = [
+      "feel-the-exotic-touch-part-1",
+      "muzikfranzs-twist-contest",
+      "viva-la-vida-muzikfranz-cumbia-lockdown-session",
+      "muzikfranz-fait-un-tour-de-man%C3%A8ge",
+      "quaratine-airways-stay-at-home-and-fly-high-to-thailand-and-cambodia",
+      "freestyle-airlines-flight-nr140605-to-latin-america",
+      "the-funky-breaks-train-train-nr140531",
+      "funky-freestyle-train-train-nr140526",
+      "freestyle-airlines-flight-nr140520-air-acrobatics-do-the-loop",
+      "freestyle-airlines-flight-nr090509-muzikfranz-pleasure-flight",
+      "muzikfranz-freestyle-airlines-flight-nr140515-to-africa",
+      "deep-keta-pop-ethno-world-indie-mix",
+      "deep-keta-pop-2-by-muzikfranZ",
+      "deep-keta-pop-3-by-muzikfranZ",
+      "why-nam-magic",
+      "head-house-part-1",
+      "head-house-part-2",
+      "head-house-part-3",
+      "the-worlds-most-horrible-singer-perfectly-terrible-music-love-it-or-hate-it"
+    ].map((slug, i) => ({
+      title: slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+      url: `https://www.mixcloud.com/muZikfranZ/${slug}/`
+    }));
 
-    document.querySelectorAll('.cover').forEach(cover => {
+    const createCover = (mix, index) => {
+      const cover = document.createElement('div');
+      cover.className = 'cover';
+      cover.textContent = mix.title;
+      cover.title = mix.title;
+      cover.draggable = true;
+      cover.style.left = `${100 + (index % 10) * 120}px`;
+      cover.style.top = `${50 + Math.floor(index / 10) * 140}px`;
       cover.addEventListener('dragstart', e => {
-        e.dataTransfer.setData("text/plain", cover.dataset.mix);
+        e.dataTransfer.setData('text/plain', mix.url);
       });
+      document.body.appendChild(cover);
+    };
+
+    mixes.forEach((mix, index) => createCover(mix, index));
+
+    const dropImage = document.getElementById("dropImage");
+    dropImage.addEventListener("dragover", e => e.preventDefault());
+    dropImage.addEventListener("drop", e => {
+      e.preventDefault();
+      const url = e.dataTransfer.getData("text/plain");
+      if (url) {
+        const encodedFeed = encodeURIComponent(url.replace("https://www.mixcloud.com", ""));
+        document.getElementById("mixPlayer").src = `https://www.mixcloud.com/widget/iframe/?feed=${encodedFeed}&hide_cover=1&light=1&autoplay=1`;
+      }
     });
   </script>
 </body>
