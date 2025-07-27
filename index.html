@@ -16,20 +16,19 @@
     }
 
     .cover {
-      width: 100px;
-      height: 100px;
+      width: 175px;
+      height: 129px;
       background: url('cover.png') no-repeat center/cover;
       position: absolute;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 5px rgba(0,0,0,0.5);
-      overflow: hidden;
       text-align: center;
-      font-size: 9px;
+      font-size: 10px;
       color: orange;
       text-shadow: 1px 1px 2px #000;
       cursor: grab;
+      box-shadow: 0 0 5px rgba(0,0,0,0.5);
     }
 
     .cover:active {
@@ -39,9 +38,9 @@
     #dropImage {
       position: absolute;
       left: 50%;
-      top: 75%;
+      top: 87.5%;
       transform: translate(-50%, -50%);
-      height: 300px;
+      height: 150px;
       width: auto;
       z-index: 1;
     }
@@ -96,8 +95,8 @@
       cover.textContent = mix.title;
       cover.title = mix.title;
       cover.draggable = true;
-      cover.style.left = `${100 + (index % 10) * 120}px`;
-      cover.style.top = `${50 + Math.floor(index / 10) * 140}px`;
+      cover.style.left = `${60 + (index % 10) * 180}px`;
+      cover.style.top = `${40 + Math.floor(index / 10) * 160}px`;
       cover.addEventListener('dragstart', e => {
         e.dataTransfer.setData('text/plain', mix.url);
       });
