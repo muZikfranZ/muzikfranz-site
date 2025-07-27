@@ -26,9 +26,17 @@
       text-align: center;
       font-size: 10px;
       color: black;
-      padding-top: 8px;
+      padding: 8px 5px 0;
       cursor: grab;
       box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+
+    .cover span {
+      background: white;
+      padding: 2px 4px;
+      display: inline-block;
+      max-width: 150px;
+      word-break: break-word;
     }
 
     .cover:active {
@@ -38,7 +46,7 @@
     #dropImage {
       position: absolute;
       left: 50%;
-      top: 75%;
+      top: 85%;
       transform: translate(-50%, -50%);
       height: 75px;
       width: auto;
@@ -92,11 +100,13 @@
     const createCover = (mix, index) => {
       const cover = document.createElement('div');
       cover.className = 'cover';
-      cover.textContent = mix.title;
       cover.title = mix.title;
       cover.draggable = true;
       cover.style.left = `${60 + (index % 10) * 180}px`;
       cover.style.top = `${40 + Math.floor(index / 10) * 160}px`;
+      const textSpan = document.createElement('span');
+      textSpan.textContent = mix.title;
+      cover.appendChild(textSpan);
       cover.addEventListener('dragstart', e => {
         e.dataTransfer.setData('text/plain', mix.url);
       });
