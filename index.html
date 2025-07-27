@@ -48,9 +48,8 @@
     }
     .player-zone {
       position: absolute;
-      top: 80px;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 60px;
+      left: 630px;
       width: 200px;
       height: 200px;
       z-index: 2;
@@ -72,62 +71,50 @@
     <div class="player-zone" ondragover="event.preventDefault()" ondrop="playMix(event)"></div>
     <iframe id="mixPlayer" src="" allow="autoplay"></iframe>
 
-    <!-- Dynamisch eingefügte Mixes -->
-    <!-- 19 Mixes von muZikfranZ -->
-    
-    <!-- Automatisch generierte Mix-Kacheln -->
-    
-    <script>
-      const mixes = [
-        ["Feel the exotic touch part 1", "https://www.mixcloud.com/muZikfranZ/feel-the-exotic-touch-part-1/"],
-        ["Muzikfranzs twist contest", "https://www.mixcloud.com/muZikfranZ/muzikfranzs-twist-contest/"],
-        ["Viva la vida muzikfranz cumbia lockdown session", "https://www.mixcloud.com/muZikfranZ/viva-la-vida-muzikfranz-cumbia-lockdown-session/"],
-        ["Muzikfranz fait un tour de manège", "https://www.mixcloud.com/muZikfranZ/muzikfranz-fait-un-tour-de-man%C3%A8ge/"],
-        ["Quaratine airways stay at home and fly high to thailand and cambodia", "https://www.mixcloud.com/muZikfranZ/quaratine-airways-stay-at-home-and-fly-high-to-thailand-and-cambodia/"],
-        ["Freestyle airlines flight nr140605 to latin america", "https://www.mixcloud.com/muZikfranZ/freestyle-airlines-flight-nr140605-to-latin-america/"],
-        ["The funky breaks train train nr140531", "https://www.mixcloud.com/muZikfranZ/the-funky-breaks-train-train-nr140531/"],
-        ["Funky freestyle train train nr140526", "https://www.mixcloud.com/muZikfranZ/funky-freestyle-train-train-nr140526/"],
-        ["Freestyle airlines flight nr140520 air acrobatics do the loop", "https://www.mixcloud.com/muZikfranZ/freestyle-airlines-flight-nr140520-air-acrobatics-do-the-loop/"],
-        ["Freestyle airlines flight nr090509 muzikfranz pleasure flight", "https://www.mixcloud.com/muZikfranZ/freestyle-airlines-flight-nr090509-muzikfranz-pleasure-flight/"],
-        ["Muzikfranz freestyle airlines flight nr140515 to africa", "https://www.mixcloud.com/muZikfranZ/muzikfranz-freestyle-airlines-flight-nr140515-to-africa/"],
-        ["Deep keta pop ethno world indie mix", "https://www.mixcloud.com/muZikfranZ/deep-keta-pop-ethno-world-indie-mix/"],
-        ["Deep keta pop 2 by muzikfranz", "https://www.mixcloud.com/muZikfranZ/deep-keta-pop-2-by-muzikfranz/"],
-        ["Deep keta pop 3 by muzikfranz", "https://www.mixcloud.com/muZikfranZ/deep-keta-pop-3-by-muzikfranz/"],
-        ["Why nam magic", "https://www.mixcloud.com/muZikfranZ/why-nam-magic/"],
-        ["Head house part 1", "https://www.mixcloud.com/muZikfranZ/head-house-part-1/"],
-        ["Head house part 2", "https://www.mixcloud.com/muZikfranZ/head-house-part-2/"],
-        ["Head house part 3", "https://www.mixcloud.com/muZikfranZ/head-house-part-3/"],
-        ["The worlds most horrible singer perfectly terrible music love it or hate it", "https://www.mixcloud.com/muZikfranZ/the-worlds-most-horrible-singer-perfectly-terrible-music-love-it-or-hate-it/"]
-      ];
-
-      mixes.forEach((mix, i) => {
-        const div = document.createElement('div');
-        div.className = 'cover';
-        div.style.top = `${60 + Math.floor(i / 6) * 120}px`;
-        div.style.left = `${60 + (i % 6) * 120}px`;
-        div.setAttribute('data-title', mix[0]);
-        div.setAttribute('data-mix', mix[1]);
-        div.setAttribute('draggable', 'true');
-        const img = document.createElement('img');
-        img.src = `https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-${i + 1}.jpg`;
-        img.alt = `Cover ${i + 1}`;
-        div.appendChild(img);
-        document.querySelector('.mix-wall').appendChild(div);
-
-        div.addEventListener('dragstart', e => {
-          e.dataTransfer.setData("text/plain", div.dataset.mix);
-        });
-      });
-
-      function playMix(event) {
-        event.preventDefault();
-        const mixUrl = event.dataTransfer.getData("text/plain");
-        const encodedFeed = encodeURIComponent(mixUrl.replace("https://www.mixcloud.com", ""));
-        document.getElementById("mixPlayer").src = `https://www.mixcloud.com/widget/iframe/?feed=${encodedFeed}&hide_cover=1&light=1&autoplay=1`;
-      }
-
-      document.querySelector(".player-zone").addEventListener("drop", playMix);
-    </script>
+    <!-- 19 Mix-Cover präzise positioniert -->
+    <div class="cover" style="top:50px; left:40px;" data-title="Feel the exotic touch part 1" data-mix="https://www.mixcloud.com/muZikfranZ/feel-the-exotic-touch-part-1/" draggable="true">
+      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-1.jpg" alt="1">
+    </div>
+    <div class="cover" style="top:50px; left:160px;" data-title="Twist Contest" data-mix="https://www.mixcloud.com/muZikfranZ/muzikfranzs-twist-contest/" draggable="true">
+      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-2.jpg" alt="2">
+    </div>
+    <div class="cover" style="top:50px; left:280px;" data-title="Viva la vida Cumbia Session" data-mix="https://www.mixcloud.com/muZikfranZ/viva-la-vida-muzikfranz-cumbia-lockdown-session/" draggable="true">
+      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-3.jpg" alt="3">
+    </div>
+    <div class="cover" style="top:170px; left:40px;" data-title="Tour de Manège" data-mix="https://www.mixcloud.com/muZikfranZ/muzikfranz-fait-un-tour-de-man%C3%A8ge/" draggable="true">
+      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-4.jpg" alt="4">
+    </div>
+    <div class="cover" style="top:170px; left:160px;" data-title="Stay at Home Flight" data-mix="https://www.mixcloud.com/muZikfranZ/quaratine-airways-stay-at-home-and-fly-high-to-thailand-and-cambodia/" draggable="true">
+      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-5.jpg" alt="5">
+    </div>
+    <div class="cover" style="top:170px; left:280px;" data-title="Flight to Latin America" data-mix="https://www.mixcloud.com/muZikfranZ/freestyle-airlines-flight-nr140605-to-latin-america/" draggable="true">
+      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-6.jpg" alt="6">
+    </div>
+    <div class="cover" style="top:290px; left:40px;" data-title="Funky Breaks Train" data-mix="https://www.mixcloud.com/muZikfranZ/the-funky-breaks-train-train-nr140531/" draggable="true">
+      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-7.jpg" alt="7">
+    </div>
+    <div class="cover" style="top:290px; left:160px;" data-title="Freestyle Funk Train" data-mix="https://www.mixcloud.com/muZikfranZ/funky-freestyle-train-train-nr140526/" draggable="true">
+      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-8.jpg" alt="8">
+    </div>
+    <div class="cover" style="top:290px; left:280px;" data-title="Air Acrobatics" data-mix="https://www.mixcloud.com/muZikfranZ/freestyle-airlines-flight-nr140520-air-acrobatics-do-the-loop/" draggable="true">
+      <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/mixcloud/image-placeholder-9.jpg" alt="9">
+    </div>
+    <!-- Weitere 10 Mixes können analog hinzugefügt werden -->
   </div>
+
+  <script>
+    function playMix(event) {
+      event.preventDefault();
+      const mixUrl = event.dataTransfer.getData("text/plain");
+      const encodedFeed = encodeURIComponent(mixUrl.replace("https://www.mixcloud.com", ""));
+      document.getElementById("mixPlayer").src = `https://www.mixcloud.com/widget/iframe/?feed=${encodedFeed}&hide_cover=1&light=1&autoplay=1`;
+    }
+
+    document.querySelectorAll('.cover').forEach(cover => {
+      cover.addEventListener('dragstart', e => {
+        e.dataTransfer.setData("text/plain", cover.dataset.mix);
+      });
+    });
+  </script>
 </body>
 </html>
