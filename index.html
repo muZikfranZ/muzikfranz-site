@@ -2,9 +2,10 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>muZikfranZ – Mixgalerie</title>
-  <link rel="stylesheet" href="AlienLanguage.ttf" type="font/ttf" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>muZikfranZ – Mixes From Another Universe</title>
+
+  <link rel="preload" href="AlienLanguage.ttf" as="font" type="font/ttf" crossorigin="anonymous">
   <style>
     @font-face {
       font-family: 'AlienLanguage';
@@ -13,35 +14,63 @@
 
     body {
       margin: 0;
-      font-family: sans-serif;
+      padding: 0;
       background-color: #4A7981;
-      color: #fff;
+      font-family: sans-serif;
       overflow-x: hidden;
-      position: relative;
+    }
+
+    .galaxy-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.2;
     }
 
     h1 {
       font-family: 'AlienLanguage', sans-serif;
+      font-size: clamp(2rem, 6vw, 8rem);
       color: orange;
       text-align: center;
-      margin: 20px;
-      font-size: 8vw;
+      white-space: nowrap;
+      margin: 2rem 0;
+      z-index: 2;
+      position: relative;
+    }
+
+    .cover-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+      position: relative;
+      z-index: 2;
     }
 
     .cover {
-      width: 175px;
-      height: 129px;
-      background: url('cover.png') no-repeat center/cover;
-      position: absolute;
+      background-image: url('cover.png');
+      background-size: cover;
+      background-position: center;
+      width: 150px;
+      height: 120px;
       cursor: grab;
+      position: relative;
     }
 
     .cover span {
-      display: block;
+      position: absolute;
+      bottom: -20px;
+      width: 100%;
       text-align: center;
-      margin-top: 135px;
-      font-size: 10px;
-      color: black;
+      font-size: 12px;
+      color: orange;
       font-family: sans-serif;
     }
 
@@ -49,14 +78,17 @@
       cursor: grabbing;
     }
 
-    #dropImage {
+    #turntable {
       position: relative;
+      width: 300px;
+      max-width: 60vw;
+      margin: 60px auto 100px;
+      z-index: 2;
+    }
+
+    #turntable img {
+      width: 100%;
       display: block;
-      margin: 0 auto;
-      height: 175px;
-      width: auto;
-      z-index: 5;
-      margin-top: 40px;
     }
 
     iframe {
@@ -71,46 +103,41 @@
       z-index: 10;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 20px;
-      padding: 40px;
-      justify-items: center;
-    }
-
-    .grid .cover {
-      position: relative;
-      margin-bottom: 40px;
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 12vw;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
+    @media (max-width: 600px) {
+      .cover-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 12px;
       }
 
       .cover {
+        width: 100px;
+        height: 80px;
         background: none;
-        width: auto;
-        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
       .cover span {
+        position: static;
+        font-size: 12px;
         color: orange;
-        font-size: 18px;
       }
     }
   </style>
 </head>
 <body>
+  <img src="galaxy-overlay.png" class="galaxy-overlay" alt="Galaxy Overlay" />
   <h1>muZikfranZ – Mixes From Another Universe</h1>
-  <img id="dropImage" src="1210.jpg" alt="Technics SL-1210" />
-  <div class="grid" id="coverGrid"></div>
+
+  <div class="cover-grid" id="mixGrid"></div>
+
+  <div id="turntable">
+    <img src="1210.jpg" alt="Turntable" id="dropTarget"/>
+  </div>
+
   <iframe id="mixPlayer" src="" allow="autoplay"></iframe>
+
   <script>
     const mixes = [
       "feel-the-exotic-touch-part-1",
@@ -132,32 +159,31 @@
       "head-house-part-2",
       "head-house-part-3",
       "the-worlds-most-horrible-singer-perfectly-terrible-music-love-it-or-hate-it"
-    ].map((slug, i) => ({
-      title: slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
-      url: `https://www.mixcloud.com/muZikfranZ/${slug}/`
-    }));
+    ];
 
-    const coverGrid = document.getElementById("coverGrid");
+    const mixGrid = document.getElementById('mixGrid');
 
-    mixes.forEach((mix, index) => {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'cover';
-      wrapper.title = mix.title;
-      wrapper.draggable = true;
-      const text = document.createElement('span');
-      text.textContent = mix.title;
-      wrapper.appendChild(text);
-      wrapper.addEventListener('dragstart', e => {
-        e.dataTransfer.setData('text/plain', mix.url);
+    mixes.forEach(slug => {
+      const url = `https://www.mixcloud.com/muZikfranZ/${slug}/`;
+      const title = slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      const div = document.createElement('div');
+      div.className = 'cover';
+      div.draggable = true;
+      div.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('text/plain', url);
       });
-      coverGrid.appendChild(wrapper);
+
+      const span = document.createElement('span');
+      span.textContent = title;
+      div.appendChild(span);
+      mixGrid.appendChild(div);
     });
 
-    const dropImage = document.getElementById("dropImage");
-    dropImage.addEventListener("dragover", e => e.preventDefault());
-    dropImage.addEventListener("drop", e => {
+    const dropTarget = document.getElementById('dropTarget');
+    dropTarget.addEventListener('dragover', e => e.preventDefault());
+    dropTarget.addEventListener('drop', e => {
       e.preventDefault();
-      const url = e.dataTransfer.getData("text/plain");
+      const url = e.dataTransfer.getData('text/plain');
       if (url) {
         const encodedFeed = encodeURIComponent(url.replace("https://www.mixcloud.com", ""));
         document.getElementById("mixPlayer").src = `https://www.mixcloud.com/widget/iframe/?feed=${encodedFeed}&hide_cover=1&light=1&autoplay=1`;
