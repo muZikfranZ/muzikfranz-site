@@ -3,73 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>muZikfranZ – Mixes From Another Universe</title>
+  <title>muZikfranZ – Mixgalerie</title>
   <style>
     @font-face {
       font-family: 'AlienLanguage';
-      src: url('AlienLanguage.ttf') format('truetype');
+      src: url('alien language.ttf') format('truetype');
     }
 
     body {
       margin: 0;
-      font-family: sans-serif;
+      font-family: 'AlienLanguage', sans-serif;
       background-color: #4A7981;
-      color: black;
+      color: #fff;
       overflow-x: hidden;
       position: relative;
     }
 
-    body::before {
-      content: "";
-      background: url('galaxy-overlay.png') center/cover no-repeat;
-      opacity: 0.25;
+    #overlay {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
+      width: 100vw;
+      height: 100vh;
+      background: url('galaxy-overlay.png') no-repeat center center;
+      background-size: cover;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.25;
     }
 
     h1 {
-      font-family: 'AlienLanguage', sans-serif;
-      text-align: center;
       font-size: clamp(24px, 6vw, 64px);
+      text-align: center;
       color: orange;
-      white-space: nowrap;
-      margin: 20px 0 60px;
+      margin: 30px 0 20px;
+      z-index: 2;
+      position: relative;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      justify-items: center;
+    .mix-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 20px;
-      padding: 0 20px 150px;
-      max-width: 1200px;
-      margin: 0 auto;
+      padding: 20px;
+      z-index: 2;
+      position: relative;
     }
 
-    .cover {
+    .mix {
       width: 175px;
       height: 129px;
       background: url('cover.png') no-repeat center/cover;
       position: relative;
+      cursor: grab;
     }
 
-    .cover span {
-      display: block;
-      margin-top: 135px;
-      font-size: 11px;
+    .mix span {
+      position: absolute;
+      bottom: -22px;
+      width: 100%;
       text-align: center;
+      font-size: 10px;
       color: black;
       font-family: sans-serif;
     }
 
+    .mix:active {
+      cursor: grabbing;
+    }
+
     #dropImage {
-      height: 175px;
-      margin: 20px auto;
       display: block;
+      max-width: 40vw;
+      height: auto;
+      margin: 60px auto;
+      z-index: 2;
+      position: relative;
     }
 
     iframe {
@@ -84,32 +94,41 @@
       z-index: 10;
     }
 
-    /* Mobile only: title only */
-    @media (max-width: 600px) {
-      .cover {
-        display: none;
+    @media (max-width: 768px) {
+      .mix-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
       }
 
-      .title-only {
-        display: block;
-        text-align: center;
+      .mix {
+        width: auto;
+        height: auto;
+        background: none;
+        padding: 10px;
+      }
+
+      .mix span {
         color: orange;
         font-size: 14px;
-        margin-bottom: 12px;
+        position: static;
       }
-    }
 
-    @media (min-width: 601px) {
-      .title-only {
-        display: none;
+      #dropImage {
+        max-width: 70vw;
+        margin: 40px auto;
       }
     }
   </style>
 </head>
 <body>
+  <div id="overlay"></div>
   <h1>muZikfranZ – Mixes From Another Universe</h1>
-  <div class="grid" id="mixGrid"></div>
-  <img id="dropImage" src="1210.jpg" alt="Technics SL-1210" />
+
+  <div class="mix-container" id="mixes"></div>
+
+  <img id="dropImage" src="1210.jpg" alt="Technics SL-1210">
+
   <iframe id="mixPlayer" src="" allow="autoplay"></iframe>
 
   <script>
@@ -133,34 +152,27 @@
       "head-house-part-2",
       "head-house-part-3",
       "the-worlds-most-horrible-singer-perfectly-terrible-music-love-it-or-hate-it"
-    ].map(slug => ({
+    ].map((slug) => ({
       title: slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
       url: `https://www.mixcloud.com/muZikfranZ/${slug}/`
     }));
 
-    const mixGrid = document.getElementById('mixGrid');
+    const container = document.getElementById("mixes");
 
     mixes.forEach(mix => {
-      // Desktop cover
-      const cover = document.createElement('div');
-      cover.className = 'cover';
-      cover.draggable = true;
-      const label = document.createElement('span');
-      label.textContent = mix.title;
-      cover.appendChild(label);
-      cover.addEventListener('dragstart', e => {
-        e.dataTransfer.setData('text/plain', mix.url);
+      const div = document.createElement("div");
+      div.className = "mix";
+      div.title = mix.title;
+      div.draggable = true;
+      const span = document.createElement("span");
+      span.textContent = mix.title;
+      div.appendChild(span);
+      div.addEventListener("dragstart", e => {
+        e.dataTransfer.setData("text/plain", mix.url);
       });
-      mixGrid.appendChild(cover);
-
-      // Mobile title-only
-      const titleOnly = document.createElement('div');
-      titleOnly.className = 'title-only';
-      titleOnly.textContent = mix.title;
-      mixGrid.appendChild(titleOnly);
+      container.appendChild(div);
     });
 
-    // Drag & Drop
     const dropImage = document.getElementById("dropImage");
     dropImage.addEventListener("dragover", e => e.preventDefault());
     dropImage.addEventListener("drop", e => {
